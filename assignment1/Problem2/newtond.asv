@@ -12,20 +12,23 @@ function x = newtond(f, jacfd, h, x0, tol)
     % of update from iteration to iteration is <= tol.
 
     % x: Estimate of root (length-d column vector)
+
+    fx = f(x0)
+    fxNorm = norm(fx)
     x = x0;
-    fx = f(x);
     iteration = 1;
-    fxNorm(iteration) = norm(fx);
     
     while abs(fxNorm) > tol
-        d = jacfd(f, x, h)\(-fx);
-        x = x + d;
-        fx = f(x);
-        fxNorm(iteration) = norm(fx);
+        d = jacfd(f, x, h)\(-f(x));
+        xIncr = x + d;
+
         iteration = iteration + 1;
-    end
+        fxNorm(iteration) = norm(fx);
+    end 
     
-    plot(fxNorm)
+    %fxNorm
+    
+    %plot(fxNorm)
     
     return
 end

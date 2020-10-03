@@ -1,8 +1,9 @@
 function newtondTest()
     h = 10^-5;
     x0 = [-1.00;0.75;1.50];
-    tol = 0.0001;
+    tol = 0.00001;
     res = newtond(@f, @jacfd, h, x0, tol)
+    norm(f(res))
     
     %x = optimvar('x',3);
     %f1 = x(1)^2+x(2)^4+x(3)^6-2 == 0;
@@ -23,13 +24,12 @@ function fx = f(t)
     y = t(2);
     z = t(3);
 
-    fx = [x^2+y^4+z^6-2; cos(x*y*z^2)-x-y-z;  y^2+z^2-(x+y-z)^2];
+    fx = [x.^2+y.^4+z.^6-2; cos(x*y*z.^2)-x-y-z;  y.^2+z.^3-(x+y-z).^2];
 end
 
 function jacfdx = jacfd(f, x, h)
     d = length(x);
     jacfdx = zeros(d,d);
-    
     for i = 1:d
         jacfdx(i,:) = funcGradient(f, i, x, d, h);
     end
