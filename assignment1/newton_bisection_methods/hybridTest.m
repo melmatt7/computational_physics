@@ -1,5 +1,4 @@
 function hybridTest()
-    %res = findIntervals(-2, 3, @p)
     res = hybrid(@g,@dfdx, 0, 5, 0.00001, 0.00001);
 end
 

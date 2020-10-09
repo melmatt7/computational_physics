@@ -3,12 +3,11 @@ function newtondTest()
     x0 = [-1.00;0.75;1.50];
     tol = 0.00001;
     res = newtond(@f, @jacfd, h, x0, tol)
-    norm(f(res))
     
     %x = optimvar('x',3);
     %f1 = x(1)^2+x(2)^4+x(3)^6-2 == 0;
     %f2 = cos(x(1)*x(2)*x(3)^2)-x(1)-x(2)-x(3) == 0;
-    %f3 = x(2)^2+x(3)^2-(x(1)+x(2)-x(3))^2 == 0;
+    %f3 = x(2)^2+x(3)^3-(x(1)+x(2)-x(3))^2 == 0;
     %prob = eqnproblem;
     %prob.Equations.eq1 = f1;
     %prob.Equations.eq2 = f2;
