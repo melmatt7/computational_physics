@@ -12,9 +12,12 @@ function [a] = nbodyaccn(m, r)
             if i == j
                 continue
             end
-            deltar = r(j,:) - r(i,:)
-            a(i,:) = a(i,:) + (m(j)/norm(deltar)^3)*deltar;
+            deltar = r(j,:) - r(i,:);
+            sum = sum + (m(j)/norm(deltar)^3)*deltar;
+            
         end
+        a(i,:) = sum;
+        sum = 0;
     end
             
 end
