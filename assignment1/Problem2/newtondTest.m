@@ -5,7 +5,7 @@ function newtondTest()
     res = newtond(@f, @jacfd, h, x0, tol)
     norm(f(res))
     
-    %x = optimvar('x',3);
+    %x = optimvar('x',3); 
     %f1 = x(1)^2+x(2)^4+x(3)^6-2 == 0;
     %f2 = cos(x(1)*x(2)*x(3)^2)-x(1)-x(2)-x(3) == 0;
     %f3 = x(2)^2+x(3)^2-(x(1)+x(2)-x(3))^2 == 0;
