@@ -1,0 +1,8 @@
+function toomre()
+    galaxy_num = length(core_m_vec)
+    %discretization
+    nt = 2^level + 1;
+    t = linspace(0.0,tmax,nt);
+    deltat = t(2)-t(1);
+end
+
