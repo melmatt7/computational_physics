@@ -5,14 +5,13 @@ function [a] = nbodyaccn(m, r)
     
     particle_num = length(m);
     a = zeros(particle_num, 3);
-    sum = 0;
     
     for i = (1:particle_num)
         for j = (1:particle_num)
             if i == j
                 continue
             end
-            deltar = r(j,:) - r(i,:)
+            deltar = r(j,:) - r(i,:);
             a(i,:) = a(i,:) + (m(j)/norm(deltar)^3)*deltar;
         end
     end
