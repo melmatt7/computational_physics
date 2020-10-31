@@ -1,4 +1,4 @@
-function toomre_single(tmax, level, galaxy)
+function toomre_single(tmax, level, galaxy, r_min, r_max)
     % Discretization
     nt = 2^level + 1;
     deltat = tmax/(nt-1);
@@ -10,10 +10,6 @@ function toomre_single(tmax, level, galaxy)
     
     r = zeros(1, star_num+1, 3, nt);
     vi = zeros(1, star_num+1, 3);
-    
-    % Minimum/maximum star orbital radius
-    r_min = 0.04;  
-    r_max = 0.4; 
     
     for star=2:star_num+1      
         % Initial Position, Velocity per star

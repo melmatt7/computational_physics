@@ -1,11 +1,11 @@
-function toomre_multi(tmax, level, galaxy_system)
+function toomre_multi(tmax, level, galaxy_system, r_min, r_max)
     
     %discretization
     nt = 2^level + 1;
     deltat = tmax/(nt-1);
     t = (0.0:deltat:(nt-1)*deltat);
     
-    galaxy_num = galaxy_system.galaxy_num;
+    galaxy_num = length(galaxy_system.core_ms);
     star_num_vec = galaxy_system.star_nums;
     star_num = max(galaxy_system.star_nums);
     core_mass_vec = galaxy_system.core_ms;
@@ -20,24 +20,12 @@ function toomre_multi(tmax, level, galaxy_system)
         vi(core,1,:) = galaxy_system.core_vi(core,:);        
         r(core,1,:,2) = r(core,1,:,1) + deltat*vi(core,1,:);     
         
-        %Minimum/maximum star orbital radius
-        %r_min = 0.04;  
-        %r_max = 0.2; 
-        
-        %Minimum/maximum star orbital radius
-        r_min = 0.03;  
-        r_max = 0.2; 
-        %Initial Position, Velocity for the stars
-        %d = (r_max-r_min)*linspace(0,1,star_num+1) + r_min;
-        %theta = (2*pi)*linspace(0,1,star_num+1);
-        
-        for star=2:galaxy_system.star_nums(core)+1
+        for star=2:star_num_vec(core)+1
             % Initial Position, Velocity per star
             d = (r_max-r_min)*rand(1,1) + r_min;
             theta = (2*pi)*rand(1,1);
 
             % Representing x and y components of d
-            %r_orbit = [d(star)*cos(theta(star)) d(star)*sin(theta(star)) 0];
             r_orbit = [d*cos(theta) d*sin(theta) 0];
 
             r(core,star,:,1) = reshape(r(core,1,:,1), [1,3]) + r_orbit;
@@ -46,23 +34,13 @@ function toomre_multi(tmax, level, galaxy_system)
         end
     end
     
-    a = nbodyaccn2(core_mass_vec,galaxy_num, star_num, r(:, :, :, 1));
-    %Initial Acceleration for all Galaxy Cores 
-    a_coresi = nbodyaccn(core_mass_vec, permute(r(:,1,:,1),[1,3,2]));
+    a = nbodyaccn_total(core_mass_vec, star_num, r(:, :, :, 1));
     for core = 1:galaxy_num
-        permute(a_coresi(core,:),[1,3,2]);
         r(core,1,:,2) = r(core,1,:,1) + deltat*vi(core,1,:) + 0.5*deltat^2*a(core, 1, :);      
-        
-        % Initial Acceleration for all stars around current core
-        mvec = [core_mass_vec(core),zeros(1,star_num_vec(core))];
-        a_starsi = nbodyaccn(mvec, permute(r(core,:,:,1),[2,3,1,4]));
         for star=2:star_num+1
-            permute(a_starsi(star,:),[1,3,2]);
             r(core,star,:,2) = r(core,star,:,1) + deltat*vi(core,star,:) + 0.5*deltat^2*a(core, star, :);      
         end
     end
-    
-    
     
     % Plot initializing parameters
     plotenable = 1;
@@ -126,16 +104,9 @@ function toomre_multi(tmax, level, galaxy_system)
             pause(pausesecs);
         end
         
-        a = nbodyaccn2(core_mass_vec,galaxy_num, star_num, r(:, :, :, n));
-
-        a_core = nbodyaccn(core_mass_vec, permute(r(:,1,:,n),[1,3,2]));
+        a = nbodyaccn_total(core_mass_vec, star_num, r(:, :, :, n));
         for core=1:galaxy_num
-            %r(core,1,:,n+1) = 2*reshape(r(core,1,:,n),[1,3]) - reshape(r(core,1,:,n-1),[1,3]) + deltat^2*reshape(a_core(core,:),[1,3]);
-            
-            % Update particle position
-            %m_vec = [core_mass_vec(core),zeros(1,star_num_vec(core))];
-            %a_stars = nbodyaccn(m_vec, permute(r(1,:,:,n),[2,3,1,4]));
-            for star=1:galaxy_system.star_nums(core)+1
+            for star=1:star_num_vec(core)+1
                 r(core,star,:,n+1) = 2*reshape(r(core,star,:,n),[1,3]) - reshape(r(core,star,:,n-1),[1,3]) + deltat^2*reshape(a(core,star,:),[1,3]);
             end
         end
