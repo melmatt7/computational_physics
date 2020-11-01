@@ -1,12 +1,10 @@
 function [t,r] = two_body(tmax, level, m1, m2, r)
-    %TWO_BODY Summary of this function goes here
-    %   Detailed explanation goes here
+    % tmax: maximum timestep to account for
+    % level: discretization level
+    % m1: first mass in the system
+    % m2: second mass in the system
+    % r: N x 3 array containing the computed particle accelerations
 
-    %m1 = 1;
-    %m2 = 0.5;
-    %r = 1;
-    %level = 6;
-    %tmax = 50;
     m = m1+m2;
     
     %discretization
@@ -54,8 +52,6 @@ function [t,r] = two_body(tmax, level, m1, m2, r)
         r(1, :, n+1) = 2*r(1, :, n) - r(1, :, n-1) + deltat^2 * a(1,:,n);
         r(2, :, n+1) = 2*r(2, :, n) - r(2, :, n-1) + deltat^2 * a(2,:,n);
     end
-    
-
 
 end
 
