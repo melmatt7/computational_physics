@@ -1,3 +1,9 @@
+clf
+hold on
+
+addpath('..')
+addpath('../rk4step')
+
 y0 = [0; 1];
 
 [t6, y6]   =  rk4(@fcn, linspace(0, 3*pi, 2^6 + 1), y0);

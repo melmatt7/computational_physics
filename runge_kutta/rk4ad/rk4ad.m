@@ -38,7 +38,8 @@ function [tout, yout] = rk4ad(fcn, tspan, reltol, y0)
             % loop to determine appropriate dt for interval 
             % curr_t -> curr_t + dt
             while eC > reltol
-                dt =  dtspan*(reltol/eC);
+                %dt =  dtspan*(reltol/eC);
+                dt =  dtspan/frac;
                 if dt < 1.0e-4
                     break;
                 end                

@@ -1,3 +1,9 @@
+clf
+hold on
+
+addpath('..')
+addpath('../rk4step')
+
 reltol_vals = [1.0e-5, 1.0e-7, 1.0e-9, 1.0e-11];
 tspan = linspace(0.0, 3.0 * pi, 65);
 y0 = [0; 1];
