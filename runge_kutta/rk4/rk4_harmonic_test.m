@@ -15,9 +15,8 @@ hold all;
 fig1(1) = plot(t6, y6(1,:), 'r-.o', 'DisplayName', "level 6");
 fig1(2) = plot(t7, y7(1,:), 'g-.+', 'DisplayName', "level 7");
 fig1(3) = plot(t8, y8(1,:), 'b-.*', 'DisplayName', "level 8");
-xlabel('t'),ylabel('x')
+xlabel('t'),ylabel('x(t)')
 legend(fig1)
-%title("Displacement of Single Mass in Two Body System")
 hold off;
 
 y7 = y7(:, 1:2:end);
@@ -29,8 +28,7 @@ err78 = y7 - y8;
 figure(2);
 hold all;
 fig2(1) = plot(t6, err67(1,:), 'r-.o','DisplayName', "level 6-7");
-fig2(2) = plot(t6, 2^4*err78(1,:), 'g-.+','DisplayName', "16(level 7-8)");
-xlabel('t'),ylabel('x')
+fig2(2) = plot(t6, 4^2*err78(1,:), 'g-.+','DisplayName', "16(level 7-8)");
+xlabel('t'),ylabel('error')
 legend(fig2)
-%title("Scaled Level Error")
 hold off;

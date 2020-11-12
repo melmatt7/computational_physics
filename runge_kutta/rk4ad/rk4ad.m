@@ -21,41 +21,37 @@ function [tout, yout] = rk4ad(fcn, tspan, reltol, y0)
         curr_t = tspan(i-1);
         next_t = tspan(i);
         curr_y = yout(:,i-1);
-        frac = 1; % dt reduction factor
         
-        % loop to ensure only solution values corresponding to the times in
-        % the tspan array are output
+        % loop to ensure only solution values corresponding 
+        % to the times in the tspan array are output
         while curr_t < next_t
             dt = next_t - curr_t;
                         
-            yC = rk4step(fcn, curr_t, dt, curr_y);
+            [yC, eC] = local_err(fcn, curr_t, dt, curr_y);
 
-            yFmid = rk4step(fcn, curr_t, dt/2, curr_y);
-            yF = rk4step(fcn, curr_t, dt/2, yFmid);
-
-            eC = 16/15*abs(yC(1) - yF(1));
-
-            % loop to determine appropriate dt for interval 
-            % curr_t -> curr_t + dt
+            % loop to determine appropriate dt for 
+            % interval curr_t -> curr_t + dt
             while eC > reltol
-                %dt =  dtspan*(reltol/eC);
-                dt =  dtspan/frac;
+                dt =  dtspan*abs(reltol/eC)^(0.7);
                 if dt < 1.0e-4
-                    break;
+                    dt = 1.0e-4;
                 end                
-                frac = frac + 1;
                 
-                yC = rk4step(fcn, curr_t, dt, curr_y);
-
-                yFmid = rk4step(fcn, curr_t, dt/2, curr_y);
-                yF = rk4step(fcn, curr_t, dt/2, yFmid);
-
-                eC = 16/15*abs(yC(1) - yF(1));
+                [yC, eC] = local_err(fcn, curr_t, dt, curr_y);
             end
             curr_y = yC;
             curr_t = curr_t + dt;
         end
         yout(:,i) = yC;
     end  
+end
+
+function [yC, eC] = local_err(fcn, curr_t, dt, curr_y)
+    yC = rk4step(fcn, curr_t, dt, curr_y);
+
+    yFmid = rk4step(fcn, curr_t, dt/2, curr_y);
+    yF = rk4step(fcn, curr_t, dt/2, yFmid);
+
+    eC = 16/15*abs(yC(1) - yF(1));
 end
 

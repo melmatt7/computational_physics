@@ -14,7 +14,6 @@ yexact = sin(tspan);
 for i = 1:length(reltol_vals)
     [~, yout(:,:,i)] = rk4ad(@fcn, tspan, reltol_vals(i), y0);
     err(:,:,i) = yout(1,:,i) - yexact;
-
 end
 
 figure(1);
@@ -23,14 +22,18 @@ fig1(1) = plot(tspan, err(1,:,1), 'r-.+', 'DisplayName', "reltol=1e-5");
 fig1(2) = plot(tspan, err(1,:,2), 'g-.+', 'DisplayName', "reltol=1e-7");
 xlabel('t'),ylabel('x'),
 legend(fig1)
-%title("Displacement of Single Mass in Two Body System")
 hold off;
 
 figure(2);
 hold all;
 fig2(1) = plot(tspan, err(1,:,3), 'b-.*', 'DisplayName', "reltol=1e-9");
-fig2(2) = plot(tspan, err(1,:,4), 'm-.*', 'DisplayName', "reltol=1e-11");
 xlabel('t'),ylabel('x'),
 legend(fig2)
-%title("Displacement of Single Mass in Two Body System")
+hold off;
+
+figure(3);
+hold all;
+fig3(1) = plot(tspan, err(1,:,4), 'm-.*', 'DisplayName', "reltol=1e-11");
+xlabel('t'),ylabel('x'),
+legend(fig3)
 hold off;
