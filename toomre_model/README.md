@@ -24,15 +24,15 @@ The convergence test results for the described levels can be seen in **Figure 1*
 
 **Figure 1.**
 
-![alt-text-1](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/displacement.jpg "title-1") ![alt-text-2](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/displacement_zoom.jpg "title-2")
+![alt-text-1](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/displacement.jpg "Figure 1") 
 
 **Figure 2.**
 
-![](RackMultipart20201123-4-13km8e5_html_25db40576d62131.jpg)
+![alt-text-1](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/level_err.jpg "Figure 2") 
 
 **Figure 3.**
 
-![](RackMultipart20201123-4-13km8e5_html_a92930351ffb2c14.jpg)
+![alt-text-1](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/scaled_level_err.jpg "Figure 3") 
 
 # Part 2: Achieving Stable Orbit for a Single Galaxy System
 
@@ -66,16 +66,4 @@ The key technical development in this section is the inclusion of the nbodyaccn\
 
 ## Results
 
-Five interesting cases were observed for the varying parameters: explosion, major collision, minor collision, triple galaxy interactions, and orbiting galaxies. All five of these .avi files can be found in the results folder of the submission. Relevant snapshots can be seen in the figures below:
-
-**Figure 4.** Snapshot from explosion.avi
-
-![](RackMultipart20201123-4-13km8e5_html_35aeffb7d4eff3a6.png)
-
-**Figure 5.** Snapshot from minor\_collision.avi
-
-![](RackMultipart20201123-4-13km8e5_html_d953820f4d052170.png)
-
-**Figure 6.** Snapshot from three\_galaxy.avi
-
-![](RackMultipart20201123-4-13km8e5_html_485e9b5277c2ed26.png)
+Five interesting cases were observed for the varying parameters: explosion, major collision, minor collision, triple galaxy interactions, and orbiting galaxies. All five of these .avi files can be found in the results folder of the repository. 
