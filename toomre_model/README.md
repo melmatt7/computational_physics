@@ -1,12 +1,6 @@
-PHYS 410
+# Toomre Model
 
-Melvin Mathews
-
-57181142
-
-# Project 1 Report: Toomre Model
-
-In this project we were tasked with simulating galaxy interactions using the Toomre Model. The project was undertaken in 3 parts. The first of which involved testing a simplified case of two particles in mutual orbit and then performing convergence testing on the system. A successful convergence test provided enough confidence in our approach to carry on with single and multi galaxy modelling.
+In this project I simulated galaxy interactions using the Toomre Model. The project was undertaken in 3 parts. The first of which involved testing a simplified case of two particles in mutual orbit and then performing convergence testing on the system. A successful convergence test provided enough confidence in our approach to carry on with single and multi galaxy modelling.
 
 # Part 1: Convergence Testing on 2-body System
 
@@ -14,29 +8,9 @@ A two-body system was simulated and tested with varying input level parameters t
 
 ## Methodology
 
-The initial conditions of mass and separation distance () between the two masses () was arbitrarily chosen. From here, the following derivation was used to arrive at initial velocities to ensure a circular orbit:
+The initial conditions of mass and separation distance between the two masses was arbitrarily chosen. From here, the initial velocities were calculated to ensure a circular orbit. To simplify the problem, the particles were assumed to sit at certain distances away from the origin on the x axis. These distances could be determined by assuming that the centre of mass of the system was at the origin.
 
-To simplify the problem, the particles were assumed to sit at certain distances and away from the origin on the x axis. These distances could be determined by assuming that the centre of mass of the system () was at the origin:
-
-Which results in:
-
-Now, knowing that and denoting :
-
-Similarly, for :
-
-It should be mentioned that the calculated values are just magnitudes. To convert the respective distances into vectors, ensure that they have opposite signs. From here, initial velocities can be calculated. The key realization is that gravitational force is equivalent to centripetal force in this defined two body system, such that:
-
-Where a and b are placeholders for 1 and 2 where of course a cannot equal b such that:
-
-It should be once again noted that these equations represent magnitudes and their corresponding vectors would have opposite signs. All initial conditions are now known, however, the second order FDA takes the form:
-
-This can be rearranged to give:
-
-Where n denotes a time step and is the gravitational acceleration:
-
-This means that the position at the first time step is also required to propagate the second order FDA. This can be calculated using the following equation:
-
-Combining all this information, a convergence test was performed for levels 6, 7, 8 and 9. The x component for the first mass was compared for the varying levels. Error level plots as well as scaled error level plots were generated with the appropriate scaling factor. The results of these tests are discussed below.
+A convergence test was performed for levels 6, 7, 8 and 9. The x component for the first mass was compared for the varying levels. Error level plots as well as scaled error level plots were generated with the appropriate scaling factor. The results of these tests are discussed below.
 
 ## File Descriptions
 
@@ -46,11 +20,11 @@ Combining all this information, a convergence test was performed for levels 6, 7
 
 ## Results
 
-The convergence test results for the described levels can be seen in **Figure 1** below. The plot describes the displacement in the x dimension for the first of the two masses in the two body system. The next plot ( **Figure 2** )is achieved by truncating values such that all 4 levels have the same dimensions and a difference between pairs of them can be taken. Finally, to prove that the FDA converges on the order of , each plot is scaled such that a factor n decrease in can be directly accounted for by a decrease in error. As can be seen from **Figure 3** scaling the 7-8 plot by 4 and the 8-9 plot by 16 results in overlapping plots, confirming the convergent behaviour of the employed FDA.
+The convergence test results for the described levels can be seen in **Figure 1** below. The plot describes the displacement in the x dimension for the first of the two masses in the two body system. The next plot ( **Figure 2** ) is achieved by truncating values such that all 4 levels have the same dimensions and a difference between pairs of them can be taken. Finally, to prove that the FDA converges on the order of , each plot is scaled such that a factor n decrease in can be directly accounted for by a decrease in error. As can be seen from **Figure 3** scaling the 7-8 plot by 4 and the 8-9 plot by 16 results in overlapping plots, confirming the convergent behaviour of the employed FDA.
 
 **Figure 1.**
 
-![](RackMultipart20201123-4-13km8e5_html_52da3dfa218d1775.jpg) ![](RackMultipart20201123-4-13km8e5_html_c6a7166a1bbe743f.jpg)
+![alt-text-1](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/displacement.jpg "title-1") ![alt-text-2](https://github.com/melmatt7/computational_physics/blob/master/toomre_model/results/convergence_testing/displacement_zoom.jpg "title-2")
 
 **Figure 2.**
 
