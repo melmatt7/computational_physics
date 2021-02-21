@@ -17,9 +17,6 @@ for level = lmin:lmax
         tmin = t;
         xmin = x;
     end
-    
-    size(psi)
-   
     psil(:,:,(level-lmin)+1) = psi;
 end 
 
@@ -28,24 +25,15 @@ hold all;
 for psi_index = 1:(lmax-lmin)
     dpsil = psil(:,:,psi_index+1)-psil(:,:,psi_index);    
 
-%     for t = 1:size(tmin,2)
-%         
-%         sum = 0;
-%         for x = 1:size(xmin,2)
-%             sum = sum + abs(dpsil(t,x))^2;
-%         end
-%         dpsil_mag(t) = sqrt(sum/size(xmin,2));
-%     end
-
     for t = 1:size(tmin,2)
         dpsil_mag(t) = rms(dpsil(t,:));
     end
     
     dpsil_mag = (4^(psi_index-1))*dpsil_mag;
     
-    fig1(psi_index) = plot(tmin, dpsil_mag, 'color', [rand,rand,rand], 'DisplayName',  int2str(psi_index));
-    %xlabel('Time [s]'),ylabel('X Displacement [m]')
-    %title("Displacement of Single Mass in Two Body System")   
+    fig1(psi_index) = plot(tmin, dpsil_mag, 'color', [rand,rand,rand], 'DisplayName',  strcat('4^',int2str(psi_index-1),' level',int2str(psi_index+6),'-',int2str(psi_index+5)));
+    xlabel('t'),ylabel('l-2 norm')
+    title("Scaled 3 Level Convergence for Exact Family")   
 end 
 legend(fig1);
 hold off;
@@ -61,23 +49,15 @@ hold all;
 for err_index = 1:(lmax-lmin)+1
     err = yexact(:,:)-psil(:,:,err_index);
     
-%     for t = 1:size(tmin,2)
-%         sum = 0;
-%         for x = 1:size(xmin,2)
-%             sum = sum + abs(err(t,x))^2;
-%         end
-%         err_mag(t) = sqrt(sum/size(xmin,2));
-%     end
-
     for t = 1:size(tmin,2)
         err_mag(t) = rms(err(t,:));
     end
     
     err_mag = (4^(err_index-1))*err_mag;
     
-    fig2(err_index) = plot(tmin, err_mag, 'color', [rand,rand,rand], 'DisplayName',  int2str(err_index));
-    %xlabel('Time [s]'),ylabel('X Displacement [m]')
-    %title("Displacement of Single Mass in Two Body System")   
+    fig2(err_index) = plot(tmin, err_mag, 'color', [rand,rand,rand], 'DisplayName',  strcat('4^',int2str(err_index-1),' exact - level',int2str(err_index+5)));
+    xlabel('t'),ylabel('l-2 norm')
+    title("Scaled 4 Level Error for Exact Family")   
 end 
 legend(fig2);
 hold off;

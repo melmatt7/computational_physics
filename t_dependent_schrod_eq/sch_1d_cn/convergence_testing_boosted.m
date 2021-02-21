@@ -30,28 +30,18 @@ figure(1);
 hold all;
 for psi_index = 1:(lmax-lmin)
     dpsil = psil(:,:,psi_index+1)-psil(:,:,psi_index);
-    %dpsil(90,50);
     
     size(tmin);
-    
-%     for t = 1:size(tmin,2)
-%         sum = 0;
-%         for x = 1:size(xmin,2)
-%             sum = sum + abs(dpsil(t,x))^2;
-%         end
-%         dpsil_mag(t) = sqrt(sum/size(xmin,2));
-%     end
 
     for t = 1:size(tmin,2)
         dpsil_mag(t) = rms(dpsil(t,:));
     end
     
     dpsil_mag = (4^(psi_index-1))*dpsil_mag;
-    size(dpsil_mag);
     
-    fig1(psi_index) = plot(tmin, dpsil_mag, 'color', [rand,rand,rand], 'DisplayName',  int2str(psi_index));
-    %xlabel('Time [s]'),ylabel('X Displacement [m]')
-    %title("Displacement of Single Mass in Two Body System")   
+    fig1(psi_index) = plot(tmin, dpsil_mag, 'color', [rand,rand,rand], 'DisplayName',  strcat('4^',int2str(psi_index-1),' level',int2str(psi_index+6),'-',int2str(psi_index+5)));
+    xlabel('t'),ylabel('l-2 norm')
+    title("Scaled 3 Level Convergence for Boosted Gaussian Family")   
 end 
 legend(fig1);
 hold off;

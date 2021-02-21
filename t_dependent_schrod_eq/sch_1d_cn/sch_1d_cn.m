@@ -56,44 +56,39 @@ function [x, t, psi, psire, psiim, psimod, prob, v] = sch_1d_cn(tmax, level, lam
             v(XminIndex:XmaxIndex) = Vc;
     end
     
-    f = zeros(nx,1);
-    d1 = zeros(nx,1);
-    d2 = zeros(nx,1);
     o = ones(nx,1);
-    ratio = (deltat/deltax^2)*o;
-    alphal = (1i/2)*ratio;
-    alphau = alphal;
-    d1  = o + 1i*ratio + 1i*deltat*v/2;
-    d2 = o - 1i*ratio - 1i*deltat*v/2;
+    r = (deltat/deltax^2)*o;
     
+    % definition of off-diagonals
+    alphal = (1i/2)*r;
+    alphau = (1i/2)*r;
+    alphau(2) = 0.0;
+    alphal(nx-1) = 0.0; 
+    
+    % definition of diagonals
+    d1  = o + 1i*r + 1i*deltat*v/2;
+    d2 = o - 1i*r - 1i*deltat*v/2;
     d1(1) = 1.0;
     d1(nx) = 1.0;
     d2(1) = 1.0;
     d2(nx) = 1.0;
     
-    alphau(2) = 0.0;
-    alphal(nx-1) = 0.0;    
-    
-    u1 = spdiags([-alphal, d1, -alphau], -1:1, nx, nx);
-    %full(u1);
-    u2 = spdiags([alphal, d2, alphau], -1:1, nx, nx);
+    % creation of diagonal matrices representing 
+    lhs = spdiags([-alphal, d1, -alphau], -1:1, nx, nx);
+    xx_op = spdiags([alphal, d2, alphau], -1:1, nx, nx);
     
     for n = 1:nt-1
-        f = u2*psi(n,:).';
-        f(1) = 0;
-        f(nx) = 0;
+        rhs = xx_op*psi(n,:).';
+        rhs(1) = 0;
+        rhs(nx) = 0;
         
-        psi(n+1, :) = u1\f;
+        psi(n+1, :) = lhs\rhs;
     end
     
     psire = real(psi);
     psiim = imag(psi);
-    
     ro = psi.*conj(psi);
     psimod = sqrt(ro);
-%     x(1,1:4)
-%     ro(1:8,1:4)
     prob = cumtrapz(x, ro, 2);
-%     prob(1:8,1:4)
 end
 
